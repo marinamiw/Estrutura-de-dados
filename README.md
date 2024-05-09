@@ -1,2 +1,2 @@
-# Ponteiros---C
-repositorio de estudos de ponteiros visando estrutura de dados
+# Estrutura de dados
+repositorio de estudos 
