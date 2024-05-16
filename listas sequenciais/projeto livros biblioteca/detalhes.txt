@@ -1,0 +1,13 @@
+Descrição: Criar um sistema para gerenciar livros em uma biblioteca.
+
+Funcionalidades:
+
+Adicionar novos livros à biblioteca.
+Remover livros do sistema.
+Atualizar informações dos livros (título, autor, quantidade em estoque).
+Buscar livros por título, autor ou ISBN.
+Listar todos os livros disponíveis.
+Estruturas de Dados:
+
+Lista sequencial para armazenar os livros.
+Estrutura de livro contendo campos como ISBN, título, autor, ano de publicação, e quantidade disponível.
