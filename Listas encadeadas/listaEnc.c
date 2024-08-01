@@ -20,7 +20,7 @@ void inicializa(tipoLista *lista){
 }
 
 
-bool removerNoInicio(tipoNo dado, tipoLista *lista){
+bool removerNoInicio(tipoLista *lista){
 
 
     if (lista->inicio == NULL)
@@ -38,7 +38,7 @@ bool removerNoInicio(tipoNo dado, tipoLista *lista){
     
 }
 
-bool removerNoFinal(tipoNo dado, tipoLista*lista){
+bool removerNoFinal(tipoLista*lista){
 
     if(lista->inicio == NULL)
         return false;
@@ -74,24 +74,70 @@ void destruir(tipoLista*lista){
 
 int buscarItem(tipoNo* item, tipoLista*lista){
 
-
     tipoNo* atual = lista->inicio;
 
     while(atual != NULL){
 
-        if (atual = item){
+        if (atual->dado == item){
             return atual;
         }
 
         atual = atual->proxNo;
 
+    }
+    if (atual == NULL){
+        printf("Nao existe esse item na lista dada");
+    }
+    
+}
 
+bool RemoverNo(tipoNo *item, tipoLista*lista){
+
+    if (lista->inicio == NULL){
+        return false;
     }
 
-
+    tipoNo *atual = lista->inicio;
+    tipoNo *anterior = NULL;
+    
+    while(atual != NULL){
+       
+        if(atual == item){
+            anterior->proxNo = atual->proxNo;
+            free(atual);
+            printf("removido com sucesso");
+            return true;
+        }
+        anterior = atual;
+        atual = atual->proxNo;
+    }
+    lista->quant--;
 }
 
 
+bool inserirNo(tipoNo *item, tipoLista *lista){
+
+     if (lista->inicio == NULL){
+        return false;
+    }
+
+    tipoNo *atual = lista->inicio;
+    tipoNo *anterior = NULL;
+
+    while(atual != NULL){
+
+        if (atual == item){
+            item->proxNo = atual;
+            anterior->proxNo = item;
+            return true;
+        }
+        anterior = atual;
+        atual = atual->proxNo;
+
+    }
+    lista->quant++;
+
+}
 
 
 int insereListaVazia(tipoLista *lista, int valor){
@@ -141,12 +187,39 @@ int leitor;
 printf("Digite um elemento: ");
 scanf("%d",&leitor);
 int resp = insereListaVazia(&lista, leitor);
+
 if(!resp)
    printf("Memoria nao alocada!");
 printf("Elemento guardado: %d",lista.inicio->dado);
+
 printf("\nDigite outro elemento: ");
 scanf("%d",&leitor);
 resp = insereNaFrente(&lista,leitor);
 exibeLista(&lista);
+
+printf("Digite uma lista: ");
+scanf("%d",&lista);
+resp = removerNoInicio(&lista);
+
+printf("Digite uma lista: ");
+scanf("%d",&lista);
+resp = removerNoFinal(&lista);
+
+printf("Digite uma lista: ");
+scanf("%d",&lista);
+destruir(&lista);
+
+printf("Digite um valor que deseja buscar: ");
+scanf("%d",&leitor);
+resp = buscarItem(leitor,&lista);
+
+printf("Digite um valor que deseja inserir na lista: ");
+scanf("%d",&leitor);
+resp = inserirNo(leitor,&lista);
+
+printf("Digite um indice que deseja remover da lista: ");
+scanf("%d",&leitor);
+resp = RemoverNo(leitor,&lista);
+
 
 }
