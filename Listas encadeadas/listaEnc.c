@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
-//Exemplo de Lista Encadeada usando n� cabe�a
+//Exemplo de Lista Encadeada usando nó cabeça
 
 typedef struct no{
 int dado;
@@ -91,18 +91,18 @@ int buscarItem(tipoNo* item, tipoLista*lista){
     
 }
 
-bool RemoverNo(tipoNo *item, tipoLista*lista){
+bool RemoverPosicao(tipoNo *posicao, tipoLista*lista){
 
     if (lista->inicio == NULL){
         return false;
     }
-
+    int i = 0;
     tipoNo *atual = lista->inicio;
     tipoNo *anterior = NULL;
     
     while(atual != NULL){
        
-        if(atual == item){
+        if(i == posicao){
             anterior->proxNo = atual->proxNo;
             free(atual);
             printf("removido com sucesso");
@@ -110,30 +110,32 @@ bool RemoverNo(tipoNo *item, tipoLista*lista){
         }
         anterior = atual;
         atual = atual->proxNo;
+        i++;
     }
     lista->quant--;
 }
 
 
-bool inserirNo(tipoNo *item, tipoLista *lista){
+bool inserirPosicao(tipoNo *posicao, tipoLista *lista){
 
      if (lista->inicio == NULL){
         return false;
     }
 
+    int i = 0;
     tipoNo *atual = lista->inicio;
     tipoNo *anterior = NULL;
 
     while(atual != NULL){
 
-        if (atual == item){
-            item->proxNo = atual;
-            anterior->proxNo = item;
+        if (i == posicao){
+            posicao->proxNo = atual;
+            anterior->proxNo = posicao;
             return true;
         }
         anterior = atual;
         atual = atual->proxNo;
-
+        i++;
     }
     lista->quant++;
 
@@ -215,11 +217,11 @@ resp = buscarItem(leitor,&lista);
 
 printf("Digite um valor que deseja inserir na lista: ");
 scanf("%d",&leitor);
-resp = inserirNo(leitor,&lista);
+resp = inserirPosicao(leitor,&lista);
 
 printf("Digite um indice que deseja remover da lista: ");
 scanf("%d",&leitor);
-resp = RemoverNo(leitor,&lista);
+resp = RemoverPosicao(leitor,&lista);
 
 
 }
