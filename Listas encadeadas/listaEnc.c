@@ -31,7 +31,7 @@ bool removerNoInicio(tipoLista *lista){
 
     tipoNo* noAnterior = lista->inicio;
     //agora o inicio sera o proximo no q veio dps dele. 
-    lista->inicio = lista->inicio->proxNo; //agora defini que o inicio eh o segundo elemento
+    lista->inicio = lista->inicio->proxNo; //agora define que o inicio eh o segundo elemento
     free(noAnterior); //limpo o no anterior que guardava o primeiro no, removendo ele da lista.
     lista->quant--;
     return true;
@@ -44,9 +44,10 @@ bool removerNoFinal(tipoLista*lista){
         return false;
 
     tipoNo* anterior;
-    anterior->proxNo = NULL; //o no seguinte do penultimo no deve ser nulo para que ele seja o ultimo no.
-    free(lista->fim);
-    lista->fim = anterior; //atualiza o ponteiro final da lista para o penultimo no
+    anterior->proxNo = NULL; //guarda um valor para ser o novo 'ultimo' ,uma vez que o ultimo nó for apagado. o ultimo valor sempre aponta para o nulo.
+   
+    free(lista->fim); //apaga o ultimo No de fato
+    lista->fim = anterior; //atualiza o ponteiro final da lista para o no que foi guardado, tornando ele o ultimo
     lista->quant--;
     return true;
 
@@ -65,7 +66,7 @@ void destruir(tipoLista*lista){
         free(atual); //limpando o atual
         atual = prox; //passando para o proximo
     }
-
+    printf("Lista destruída com sucesso");
     lista->inicio = NULL;
     lista->quant = 0;
 
@@ -75,16 +76,22 @@ void destruir(tipoLista*lista){
 int buscarItem(tipoNo* item, tipoLista*lista){
 
     tipoNo* atual = lista->inicio;
+    tipoNo* anterior = NULL;
+
+int i = 0;
 
     while(atual != NULL){
 
         if (atual->dado == item){
-            return atual;
+            printf("item encontrado na posicao %d\n",i);   //se o dado do nó atual corresponder ao valor interessado, ok
         }
-
+        
+        anterior = atual;
         atual = atual->proxNo;
-
+        
+        i++;
     }
+    
     if (atual == NULL){
         printf("Nao existe esse item na lista dada");
     }
@@ -96,16 +103,17 @@ bool RemoverPosicao(tipoNo *posicao, tipoLista*lista){
     if (lista->inicio == NULL){
         return false;
     }
-    int i = 0;
+    
+    int i = 0; //contador para acompanhar a posiçao no loop
     tipoNo *atual = lista->inicio;
     tipoNo *anterior = NULL;
     
     while(atual != NULL){
        
         if(i == posicao){
-            anterior->proxNo = atual->proxNo;
+            anterior->proxNo = atual->proxNo;  // como estamos removendo um nó, precisamos que o anterior desse nó agora aponte para o próximo desse nó, uma vez que deixaria um 'vacuo' entre eles qd removido
             free(atual);
-            printf("removido com sucesso");
+            printf("item removido com sucesso na posicao dada");
             return true;
         }
         anterior = atual;
@@ -129,9 +137,11 @@ bool inserirPosicao(tipoNo *posicao, tipoLista *lista){
     while(atual != NULL){
 
         if (i == posicao){
-            posicao->proxNo = atual;
+            posicao->proxNo = atual; // quando o nó for inserido na posicao desejada, queremos que o nó novo aponte para o no q estava na posicao anteriormente 
+                                            // e o anterior desse mesmo no aponte para o no inserido e nao mais para o antigo
             anterior->proxNo = posicao;
             return true;
+            printf("Item adicionado com sucesso na posicao");
         }
         anterior = atual;
         atual = atual->proxNo;
@@ -215,11 +225,11 @@ printf("Digite um valor que deseja buscar: ");
 scanf("%d",&leitor);
 resp = buscarItem(leitor,&lista);
 
-printf("Digite um valor que deseja inserir na lista: ");
+printf("Digite uma posicao que deseja inserir na lista: ");
 scanf("%d",&leitor);
 resp = inserirPosicao(leitor,&lista);
 
-printf("Digite um indice que deseja remover da lista: ");
+printf("Digite uma posicao que deseja remover da lista: ");
 scanf("%d",&leitor);
 resp = RemoverPosicao(leitor,&lista);
 
