@@ -1,0 +1,90 @@
+filas estáticas 
+
+
+dado um vetor com capacidade 100, a exemplo, 
+
+e tendo o primeiro elemento começando apenas no índice 2 e terminando no índice 4, a fila então eh esse intervalo que se encontra os valores armazenados no índice de 2 a 4
+
+numa fila, precisamos indicar duas variáveis, a begin e a end.
+
+a begin é onde a fila começa e o end é onde a fila termina + 1(nesse caso begin esta no índice 2 e end no índice 5.(pois no índice 4 eh onde esta o ultimo valor armazenado e o end armazena o próximo valor disponível)
+
+o vetor Q[begin..end-1] armazena uma fila.
+
+
+como funciona inserção de um elemento numa fila?
+
+digamos que quero inserir um valor 40, em qual índice eu teria que armazenar esse valor na fila?
+
+	teremos q colocar o 40 no end. A próxima posição disponível seria nela. Logo, 40 estará na posição de índice 5.
+
+Q[end] = y; (5 = 50)
+
+uma vez que adicionamos mais um elemento, nossa variável end deve representar a próxima posição disponível, nesse caso a end deve mudar para o próximo índice disponível. End será o índice 6.
+
+	end++;
+
+enqueue (Enfileirar.)
+
+Agora iremos remover um elemento da fila. (dequeue, desenfileirar)
+
+digamos que queremos retornar o elemento que esta no primeiro índice da fila e então remover esse elemento.
+
+x  = Q[begin]; (begin nesse momento é 2)
+(como é vetor não podemos desalocar usando um free)
+
+então o que iremos fazer?
+
+iremos passar o begin pro próximo valor dele. agora o begin é o segundo elemento da fila e não mais o primeiro original. Entao o segundo elemento da fila passa a ser o primeiro.
+
+begin++; (agora esta no índice 3)
+
+Exemplo:
+	digamos uma fila vazia, em que o begin e o end se encontram no primeiro índice dela. A FILA TEM CAPACIDADE N = 5. (5 INDICES , 0 A 4)
+
+	enqueue(10):
+
+	Q[0] = 10. colocamos o 10 no primeiro índice da fila
+
+	end ++; incrementamos o end em um para ele ir para o próximo índice disponível dentro da fila. End então ira para o índice 1.
+
+	enqueue(20)
+	
+	Q[end] = 20. colocamos o 20 no próximo índice disponível, no caso end, que se encontra no 1.
+
+	end++; novamente incrementamos 1 no end para que ele fique no próximo índice disponível.
+
+	enqueue(30)
+
+	Q[end] = 30; (30 agora esta no índice 2 que e onde o end se encontrava.
+
+	end++; então incrementamos 1 novamente no end para que ele va pro próximo índice disponível, agora ele esta no índice 3.
+
+	dequeue
+
+	x = Q[begin]; retornamos o primeiro elemento da fila que iremos remover. no caso retornamos o valor 10 que se encontrava no índice 0
+	begin ++; e então passamos o begin para o próximo valor. No caso agora o primeiro elemento da fila é o valor 20 que se encontra no índice 1.
+
+	*por isso que o inicio da fila nem sempre vai ser representado pelo índice 0 pois nesse caso por exemplo o inicio da fila agora esta iniciando no índice 1.* 
+
+	enqueue(40)
+	Q[end] = 40; 40 vai para o ultimo índice disponível, no caso índice 3
+	end++;	agora end anda mais uma casa e o novo valor disponível se encontra agora no índice 4, no caso o end
+
+	enqueue (50)
+	Q[end] = 50; msm coisa, 50 foi pro ultimo índice disponível no caso índice 4
+	end++; end agora passa a ser o índice 5 ( não tem na fila, índice de 0 a 4, maS ESTA LA)
+
+	dequeue
+
+	x = Q[begin]; begin era no índice 1, valor 20. Retornamos ele pois iremos remove-lo da fila
+	begin++; begin agora passa pro índice 2, não mais o 1. No índice 2 guardamos o valor 30.
+
+
+	enqueue(100)
+
+
+	temos um problema, pois o end se encontra no índice 5 que não existe, pois Q possui 5 elementos indexados de 0 a 4. mesmo tendo espaços livres (índice 0 e 1 que havíamos removido os valores), chegamos ao final do vetor...
+
+	temos de pensar num jeito que o end va para o índice 0. no caso teremos de aplicar numa fila circular estática!!
+	
